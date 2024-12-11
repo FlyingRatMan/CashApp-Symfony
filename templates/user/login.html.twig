@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="absolute w-screen h-screen flex items-center justify-center text-xl">
+        <form method="POST"
+              class="flex flex-col justify-center items-center w-full max-w-lg space-y-4">
+            {{ form_start(form) }}
+
+            {{ form_label(form.email) }}
+            {{ form_widget(form.email) }}
+
+            {{ form_label(form.password) }}
+            {{ form_widget(form.password) }}
+
+            {{ form_widget(form.login) }}
+            {{ form_widget(form.reset) }}
+
+            <a href="{{ path('register') }}" class="text-green-900 hover:underline">Don't have an account yet?</a>
+            {{ form_end(form) }}
+        </form>
+    </div>
+
+{% endblock %}

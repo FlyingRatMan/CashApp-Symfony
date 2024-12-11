@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="absolute w-screen h-screen flex items-center justify-center text-xl">
+        <form method="POST"
+              class="flex flex-col justify-center items-center w-full max-w-lg space-y-4">
+
+            <label for="name" class="flex flex-col w-full"> Name:
+                <input required
+                       type="text"
+                       name="name"
+                       value="{{ errors ? userName : '' }}"
+                       class="border border-gray-300 rounded-lg px-4 py-2 text-green-800 font-normal focus:outline-none focus:ring-2 focus:ring-green-400">
+            </label>
+            <label for="email" class="flex flex-col w-full"> E-Mail:
+                <input required
+                       type="email"
+                       name="email"
+                       value="{{ errors ? userEmail : '' }}"
+                       class="border border-gray-300 rounded-lg px-4 py-2 text-green-800 font-normal focus:outline-none focus:ring-2 focus:ring-green-400">
+            </label>
+            <label for="password" class="flex flex-col w-full"> Password:
+                <input required
+                       type="password"
+                       name="password"
+                       class="border border-gray-300 rounded-lg px-4 py-2 text-green-800 font-normal focus:outline-none focus:ring-2 focus:ring-green-400">
+            </label>
+
+            {% if errors is not empty %}
+                {% for error in errors %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            {% endif %}
+
+            <button type="submit"
+                    name="user"
+                    class="bg-green-400 text-white px-4 py-2 rounded-lg hover:bg-green-500">Sign up!
+            </button>
+
+            <a href="{{ path('login') }}" class="text-green-900 hover:underline">Have an account
+                already? Login here.</a>
+        </form>
+    </div>
+
+{% endblock %}

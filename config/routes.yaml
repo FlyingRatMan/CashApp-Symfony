@@ -1,5 +1,12 @@
 controllers:
-    resource:
-        path: ../src/Controller/
-        namespace: App\Controller
+    resource: ../src/Components/
     type: attribute
+
+#homepage_get:
+#    path: /
+#    controller: App\Components\AccountController::index
+#    methods: GET
+#homepage_post:
+#    path: /
+#    controller: App\Components\AccountController::postHandling
+#    methods: POST
