@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="absolute w-screen h-screen flex items-center justify-center text-xl">
+
+        {{ form_start(form, {'method': 'POST', 'action': path('login_page'), 'attr': {'class': 'form'} }) }}
+
+        {% if error %}
+            <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+        {% endif %}
+
+        <div class="flex flex-col justify-center">
+            {{ form_label(form.email) }}
+            {{ form_widget(form.email) }}
+            {{ form_errors(form.email) }}
+        </div>
+
+        <div class="flex flex-col justify-center">
+            {{ form_label(form.password) }}
+            {{ form_widget(form.password) }}
+        </div>
+
+        {{ form_widget(form.loginBtn) }}
+
+        <input type="hidden" name="_target_path" value="/account">
+
+        <a href="{{ path('app_forgot_password_request') }}" class="text-green-900 hover:underline">Forgot your password?</a>
+        <a href="{{ path('register_page') }}" class="text-green-900 hover:underline">Don't have an account yet?</a>
+
+        {{ form_end(form) }}
+
+    </div>
+
+{% endblock %}

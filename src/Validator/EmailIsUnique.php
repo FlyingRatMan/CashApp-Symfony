@@ -4,12 +4,17 @@ declare(strict_types=1);
 
 namespace App\Validator;
 
-use Composer\Semver\Constraint\Constraint;
+use Symfony\Component\Validator\Constraint;
 
-/**
- * @Annotation
- */
+#[\Attribute(\Attribute::TARGET_PROPERTY | \Attribute::TARGET_METHOD | \Attribute::IS_REPEATABLE)]
 class EmailIsUnique extends Constraint
 {
-    public string $message = 'The email "{{ value }}" is already in use';
+    public string $message = 'This email is already registered';
+
+    public function __construct(?string $message = null)
+    {
+        parent::__construct();
+
+        $this->message = $message ?? $this->message;
+    }
 }
