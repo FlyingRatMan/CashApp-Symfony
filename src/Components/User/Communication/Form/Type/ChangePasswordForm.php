@@ -1,18 +1,15 @@
 <?php
 
-namespace App\Components\User\Communication\Form;
+namespace App\Components\User\Communication\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\Length;
-use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\NotCompromisedPassword;
-use Symfony\Component\Validator\Constraints\PasswordStrength;
+use Symfony\Component\Validator\Constraints as Assert;
 
-class ChangePasswordFormType extends AbstractType
+class ChangePasswordForm extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -20,23 +17,26 @@ class ChangePasswordFormType extends AbstractType
             ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'options' => [
+                    'row_attr' => ['class' => 'form-row'],
                     'attr' => [
                         'autocomplete' => 'new-password',
+                        'class' => 'form_input',
                     ],
                 ],
                 'first_options' => [
                     'constraints' => [
-                        new NotBlank([
+                        new Assert\NotBlank([
                             'message' => 'Please enter a password',
                         ]),
-                        new Length([
-                            'min' => 12,
+                        new Assert\Length([
+                            'min' => 6,
                             'minMessage' => 'Your password should be at least {{ limit }} characters',
-                            // max length allowed by Symfony for security reasons
                             'max' => 4096,
                         ]),
-                        new PasswordStrength(),
-                        new NotCompromisedPassword(),
+                        new Assert\Regex([
+                            'pattern' => "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{6,}$/",
+                            'message' => 'Password is not valid',
+                        ]),
                     ],
                     'label' => 'New password',
                 ],
@@ -44,8 +44,6 @@ class ChangePasswordFormType extends AbstractType
                     'label' => 'Repeat Password',
                 ],
                 'invalid_message' => 'The password fields must match.',
-                // Instead of being set onto the object directly,
-                // this is read and encoded in the controller
                 'mapped' => false,
             ])
         ;

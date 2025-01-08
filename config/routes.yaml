@@ -2,6 +2,7 @@ controllers:
     resource: ../src/Components/
     type: attribute
 
+
 #homepage_get:
 #    path: /
 #    controller: App\Components\AccountController::index

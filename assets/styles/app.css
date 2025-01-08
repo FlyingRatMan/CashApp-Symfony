@@ -16,8 +16,25 @@
 }
 
 @layer components {
+    #change_password_form_plainPassword>div{
+        @apply flex flex-col justify-center;
+    }
+
+    .page {
+        @apply h-dvh w-3/5 mx-auto;
+    }
+
+    .centered {
+        @apply h-dvh flex items-center justify-center text-xl;
+    }
+
     .form {
-        @apply flex flex-col justify-center items-center w-full max-w-lg space-y-4;
+        @apply flex flex-col justify-center items-center w-full space-y-4;
+        /*max-w-lg*/
+    }
+
+    .form-row {
+        @apply flex flex-col justify-center;
     }
 
     .form_input {

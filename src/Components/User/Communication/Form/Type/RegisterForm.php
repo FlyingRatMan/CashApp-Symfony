@@ -19,7 +19,6 @@ class RegisterForm extends AbstractType
             ->add('name', FormType\TextType::class, [
                 'label' => 'Name',
                 'attr' => [
-                    'required' => true,
                     'class' => 'form_input',
                 ],
                 'constraints' => [
@@ -29,7 +28,6 @@ class RegisterForm extends AbstractType
             ->add('email', FormType\EmailType::class, [
                 'label' => 'Email',
                 'attr' => [
-                    'required' => true,
                     'class' => 'form_input',
                 ],
                 'constraints' => [
@@ -41,7 +39,6 @@ class RegisterForm extends AbstractType
             ->add('password', FormType\PasswordType::class, [
                 'label' => 'Password',
                 'attr' => [
-                    'required' => true,
                     'class' => 'form_input',
                 ],
                 'constraints' => [
@@ -62,5 +59,6 @@ class RegisterForm extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver): void
     {
+        $resolver->setDefaults([]);
     }
 }

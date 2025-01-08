@@ -57,7 +57,7 @@ class RegisterController extends AbstractController
 
             $this->entityManager->save($userDTO);
 
-            return $this->redirectToRoute('login_page');
+            return $this->redirectToRoute('app_login');
         }
 
         return $this->render('register/register.html.twig', [

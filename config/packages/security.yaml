@@ -21,21 +21,10 @@ security:
                 login_path: app_login
                 check_path: app_login
                 enable_csrf: true
+                default_target_path: register_page
             logout:
                 path: app_logout
-                # where to redirect after logout
-                # target: app_any_route
-
-#            form_login:
-#                login_path: login_page
-#                check_path: login_form
-#                username_parameter: email
-#                password_parameter: password
-#                enable_csrf: true
-#            logout:
-#                path: logout
-#                target: register_page
-
+                target: app_login
 
 #            remember_me:
 #                secret: '%kernel.secret%'
