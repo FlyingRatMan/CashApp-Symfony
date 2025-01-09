@@ -10,6 +10,10 @@ class UserMapper
 {
     public function createUserDTO(array $data): UserDTO
     {
+        if (!isset($data['id'], $data['name'], $data['email'], $data['password'])) {
+            throw new \InvalidArgumentException();
+        }
+
         return new UserDTO($data['id'], $data['name'], $data['email'], $data['password']);
     }
 
@@ -19,6 +23,10 @@ class UserMapper
         $name = $userEntity->getName();
         $email = $userEntity->getEmail();
         $password = $userEntity->getPassword();
+
+        if (!isset($id, $name, $email, $password)) {
+            throw new \InvalidArgumentException();
+        }
 
         return new UserDTO(id: $id, name: $name, email: $email, password: $password);
     }

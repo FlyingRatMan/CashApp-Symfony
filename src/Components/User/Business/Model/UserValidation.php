@@ -9,6 +9,7 @@ use App\DataTransferObjects\UserDTO;
 
 class UserValidation
 {
+    // todo not used
     public function __construct(private readonly UserRepository $repository)
     {
     }
