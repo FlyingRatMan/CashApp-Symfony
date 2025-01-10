@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Tests\User\Mapper;
+namespace App\Tests\User\Persistence\Mapper;
 
 use App\Components\User\Persistence\Mapper\UserMapper;
 use App\DataTransferObjects\UserDTO;
@@ -56,7 +56,7 @@ class UserMapperTest extends TestCase
 
         $this->expectException(\InvalidArgumentException::class);
 
-        $userDTO = $userMapper->createUserDTO($data);
+        $userMapper->createUserDTO($data);
     }
 
     public function testEntityToDTOWithInvalidUser(): void
@@ -71,6 +71,6 @@ class UserMapperTest extends TestCase
 
         $this->expectException(\InvalidArgumentException::class);
 
-        $userDTO = $userMapper->entityToDTO($userEntity);
+        $userMapper->entityToDTO($userEntity);
     }
 }

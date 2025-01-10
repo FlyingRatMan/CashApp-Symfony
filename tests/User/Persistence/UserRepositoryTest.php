@@ -2,10 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\User;
+namespace App\Tests\User\Persistence;
 
 use App\Components\User\Persistence\UserRepository;
-use App\DataFixtures\UserFixtures;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
@@ -13,23 +12,20 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 class UserRepositoryTest extends KernelTestCase
 {
     private UserRepository $userRepository;
-    private EntityManagerInterface $entityManager;
+    private ?EntityManagerInterface $entityManager;
 
     protected function setUp(): void
     {
-        self::bootKernel();
-
-        $this->entityManager = static::getContainer()->get(EntityManagerInterface::class);
-        $this->userRepository = static::getContainer()->get(UserRepository::class);
-
-        $fixture = new UserFixtures(static::getContainer()->get('security.password_hasher'));
-        $fixture->load($this->entityManager);
+        $container = static::getContainer();
+        $this->entityManager = $container->get(EntityManagerInterface::class);
+        $this->userRepository = $container->get(UserRepository::class);
     }
 
     protected function tearDown(): void
     {
         parent::tearDown();
         $this->entityManager->close();
+        $this->entityManager = null;
     }
 
     public function testGetUserByEmailReturnsUser(): void
