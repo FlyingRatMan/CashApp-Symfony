@@ -17,16 +17,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $id = null;
+    private int $id;
 
     #[ORM\Column]
-    private ?string $name = null;
+    private string $name;
+
+    #[ORM\Column(unique: true)]
+    private string $email;
 
     #[ORM\Column]
-    private ?string $email = null;
-
-    #[ORM\Column]
-    private ?string $password = null;
+    private string $password;
 
     /**
      * @var Collection<int, Account>
@@ -39,12 +39,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->transactions = new ArrayCollection();
     }
 
-    public function getId(): ?int
+    public function getId(): int
     {
         return $this->id;
     }
 
-    public function getName(): ?string
+    public function getName(): string
     {
         return $this->name;
     }
@@ -56,7 +56,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getEmail(): ?string
+    public function getEmail(): string
     {
         return $this->email;
     }
@@ -68,7 +68,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getPassword(): ?string
+    public function getPassword(): string
     {
         return $this->password;
     }

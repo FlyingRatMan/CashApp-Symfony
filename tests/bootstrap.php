@@ -12,7 +12,7 @@ if (file_exists(dirname(__DIR__).'/config/bootstrap.php')) {
     (new Dotenv())->bootEnv(dirname(__DIR__).'/.env');
 }
 
-$kernel = new \App\Kernel('test', true);
+$kernel = new App\Kernel('test', true);
 $kernel->boot();
 
 $application = new Application($kernel);
@@ -25,24 +25,24 @@ $input = new ArrayInput([
     '--quiet' => true,
 ]);
 
-//$application->run(new ArrayInput([
+// $application->run(new ArrayInput([
 //    'command' => 'doctrine:database:drop',
 //    '--force' => true,
 //    '--env' => 'test',
 //    '--quiet' => true,
-//]));
+// ]));
 //
-//$application->run(new ArrayInput([
+// $application->run(new ArrayInput([
 //    'command' => 'doctrine:database:create',
 //    '--env' => 'test',
 //    '--quiet' => true,
-//]));
+// ]));
 //
-//$application->run(new ArrayInput([
+// $application->run(new ArrayInput([
 //    'command' => 'doctrine:schema:update',
 //    '--force' => true,
 //    '--env' => 'test',
 //    '--quiet' => true,
-//]));
+// ]));
 
 $application->run($input);

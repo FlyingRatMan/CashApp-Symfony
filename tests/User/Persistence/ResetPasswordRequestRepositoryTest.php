@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Tests\Components\User\Persistence;
+namespace App\Tests\User\Persistence;
 
 use App\Components\User\Persistence\ResetPasswordRequestRepository;
 use App\Entity\ResetPasswordRequest;

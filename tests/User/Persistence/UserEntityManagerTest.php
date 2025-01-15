@@ -51,14 +51,13 @@ class UserEntityManagerTest extends KernelTestCase
     public function testSaveFromInvalidDTO(): void
     {
         $userDTO = new UserDTO(
-            0,
+            1,
             'Existing User',
-            'user1@example.com',
+            'john.doe@example.com',
             'password'
         );
 
-        $this->expectException(\Exception::class);
-        $this->expectExceptionMessage('Validation failed');
+        $this->expectException(\InvalidArgumentException::class);
 
         $this->userEntityManager->save($userDTO);
     }

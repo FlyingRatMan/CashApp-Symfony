@@ -64,7 +64,7 @@ class UserMapperTest extends TestCase
         $userMapper = new UserMapper();
         $userEntity = $this->createMock(User::class);
 
-        $userEntity->method('getId')->willReturn(null);
+        $userEntity->method('getId')->willReturn(0);
         $userEntity->method('getName')->willReturn('');
         $userEntity->method('getEmail')->willReturn('invalid-email');
         $userEntity->method('getPassword')->willReturn('');

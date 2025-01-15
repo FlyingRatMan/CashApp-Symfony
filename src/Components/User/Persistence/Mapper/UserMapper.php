@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Components\User\Persistence\Mapper;
@@ -10,7 +11,8 @@ class UserMapper
 {
     public function createUserDTO(array $data): UserDTO
     {
-        if (!isset($data['id'], $data['name'], $data['email'], $data['password'])) {
+        // todo is this a correct way?
+        if (empty($data['id']) || empty($data['name']) || empty($data['email']) || empty($data['password'])) {
             throw new \InvalidArgumentException();
         }
 
@@ -19,12 +21,13 @@ class UserMapper
 
     public function entityToDTO(User $userEntity): UserDTO
     {
+        // todo this too
         $id = $userEntity->getId();
         $name = $userEntity->getName();
         $email = $userEntity->getEmail();
         $password = $userEntity->getPassword();
 
-        if (!isset($id, $name, $email, $password)) {
+        if (empty($name) || empty($email) || empty($password) || null === $id) {
             throw new \InvalidArgumentException();
         }
 

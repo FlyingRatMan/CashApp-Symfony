@@ -24,7 +24,7 @@ class RegisterController extends AbstractController
     }
 
     #[Route('/register', name: 'register_page', methods: ['GET'])]
-    public function page(): Response
+    public function renderPage(): Response
     {
         $form = $this->createForm(RegisterForm::class);
 
@@ -32,7 +32,7 @@ class RegisterController extends AbstractController
     }
 
     #[Route('/register', name: 'register_form', methods: ['POST'])]
-    public function form(Request $request): Response
+    public function register(Request $request): Response
     {
         $form = $this->createForm(RegisterForm::class);
 

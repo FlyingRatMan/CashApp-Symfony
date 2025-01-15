@@ -12,11 +12,11 @@ class LoginControllerTest extends WebTestCase
     protected function setUp(): void
     {
         $this->client = static::createClient();
+        $this->client->request('GET', '/login');
     }
 
     public function testLoginSuccessful(): void
     {
-        $this->client->request('GET', '/login');
         $this->client->submitForm('Log in', [
             '_username' => 'user1@example.com',
             '_password' => 'password1',
@@ -31,7 +31,6 @@ class LoginControllerTest extends WebTestCase
 
     public function testLoginWithWrongEmail(): void
     {
-        $this->client->request('GET', '/login');
         self::assertResponseIsSuccessful();
 
         $this->client->submitForm('Log in', [
@@ -47,7 +46,6 @@ class LoginControllerTest extends WebTestCase
 
     public function testLoginWithWrongPassword(): void
     {
-        $this->client->request('GET', '/login');
         self::assertResponseIsSuccessful();
 
         $this->client->submitForm('Log in', [
