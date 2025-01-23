@@ -2,41 +2,43 @@
 
 {% block body %}
 
-    <div class="absolute w-screen h-screen flex items-center justify-center text-xl">
+    <div class="page">
+        <div class="centered">
 
-        {{ form_start(form, { 'attr': { 'class': 'form' } }) }}
+            {{ form_start(form, { 'attr': { 'class': 'form' } }) }}
 
-        <div class="form-row">
-            {{ form_label(form.name) }}
-            {{ form_widget(form.name) }}
-            <div class="form_error">
-                {{ form_errors(form.name) }}
+            <div class="form_row">
+                {{ form_label(form.name) }}
+                {{ form_widget(form.name) }}
+                <div class="form_error">
+                    {{ form_errors(form.name) }}
+                </div>
             </div>
-        </div>
 
-        <div class="form-row">
-            {{ form_label(form.email) }}
-            {{ form_widget(form.email) }}
-            <div class="form_error">
-                {{ form_errors(form.email) }}
+            <div class="form_row">
+                {{ form_label(form.email) }}
+                {{ form_widget(form.email) }}
+                <div class="form_error">
+                    {{ form_errors(form.email) }}
+                </div>
             </div>
-        </div>
 
-        <div class="form-row">
-            {{ form_label(form.password) }}
-            {{ form_widget(form.password) }}
-            <div class="form_error">
-                {{ form_errors(form.password) }}
+            <div class="form_row">
+                {{ form_label(form.password) }}
+                {{ form_widget(form.password) }}
+                <div class="form_error">
+                    {{ form_errors(form.password) }}
+                </div>
             </div>
+
+            {{ form_widget(form.registerBtn) }}
+
+            <a href="{{ path('app_login') }}" class="text-green-900 hover:underline">Have an account already? Login
+                here.</a>
+
+            {{ form_end(form) }}
+
         </div>
-
-        {{ form_widget(form.registerBtn) }}
-
-        <a href="{{ path('app_login') }}" class="text-green-900 hover:underline">Have an account already? Login
-            here.</a>
-
-        {{ form_end(form) }}
-
     </div>
 
 {% endblock %}

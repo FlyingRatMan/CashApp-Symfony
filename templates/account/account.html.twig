@@ -2,23 +2,37 @@
 
 {% block body %}
 
-    <div class="absolute w-screen h-screen flex items-center justify-center text-xl">
-        <form method="POST"
-              class="flex flex-col justify-center items-center w-full max-w-lg space-y-4">
-            {{ form_start(form) }}
+    <div class="page">
 
-            <div class="flex flex-col justify-center">
+        {% if app.user %}
+            <div class="flex items-center justify-center">
+                <p>You are logged in as {{ app.user.name }}</p>
+                <button class="form_secondary-btn">
+                    <a href="{{ path('app_logout') }}">Logout</a>
+                </button>
+            </div>
+        {% endif %}
+
+        <div class="centered">
+
+            {{ form_start(form, { 'attr': { 'class': 'form' } }) }}
+
+            <div class="form_row">
                 {{ form_label(form.amount) }}
                 {{ form_widget(form.amount) }}
                 {{ form_errors(form.amount) }}
             </div>
 
-            {{ form_widget(form.transfer) }}
+            <button class="form_primary-btn" type="submit">
+                Send
+            </button>
 
-            <a href="{{ path('register_page') }}" class="text-green-900 hover:underline">Don't have an account yet?</a>
+            <a href="{{ path('register_page') }}" class="text-green-900 hover:underline">Don't have an account
+                yet?</a>
 
             {{ form_end(form) }}
-        </form>
+
+        </div>
     </div>
 
 {% endblock %}

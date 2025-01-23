@@ -17,16 +17,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private int $id;
+    private ?int $id = null;
 
     #[ORM\Column]
-    private string $name;
+    private ?string $name = null;
 
     #[ORM\Column(unique: true)]
-    private string $email;
+    private ?string $email = null;
 
     #[ORM\Column]
-    private string $password;
+    private ?string $password = null;
 
     /**
      * @var Collection<int, Account>
@@ -39,12 +39,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->transactions = new ArrayCollection();
     }
 
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -56,7 +56,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getEmail(): string
+    public function getEmail(): ?string
     {
         return $this->email;
     }
@@ -68,7 +68,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getPassword(): string
+    public function getPassword(): ?string
     {
         return $this->password;
     }
@@ -92,7 +92,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if (!$this->transactions->contains($transaction)) {
             $this->transactions->add($transaction);
-            $transaction->setUserId($this);
+            $transaction->setUser($this);
         }
 
         return $this;
@@ -101,9 +101,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function removeTransaction(Account $transaction): static
     {
         if ($this->transactions->removeElement($transaction)) {
-            // set the owning side to null (unless already changed)
-            if ($transaction->getUserId() === $this) {
-                $transaction->setUserId(null);
+            if ($transaction->getUser() === $this) {
+                $transaction->setUser(null);
             }
         }
 

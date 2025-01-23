@@ -17,7 +17,7 @@ class RegisterControllerTest extends WebTestCase
         $this->client->request('GET', '/register');
     }
 
-    public function testRenderPage(): void
+    public function testRenderForm(): void
     {
         self::assertResponseIsSuccessful();
         self::assertSelectorExists('form');

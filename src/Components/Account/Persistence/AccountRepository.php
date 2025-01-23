@@ -2,6 +2,7 @@
 
 namespace App\Components\Account\Persistence;
 
+use App\Components\Account\Persistence\Mapper\AccountMapper;
 use App\Entity\Account;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -11,33 +12,32 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class AccountRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
-    {
+    public function __construct(
+        ManagerRegistry $registry,
+        private readonly AccountMapper $accountMapper,
+    ) {
         parent::__construct($registry, Account::class);
     }
 
-//    /**
-//     * @return Account[] Returns an array of Account objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('a')
-//            ->andWhere('a.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('a.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    public function getAllByUserID(int $userId): array
+    {
+        $transactions = $this->findBy(['user' => $userId]);
 
-//    public function findOneBySomeField($value): ?Account
-//    {
-//        return $this->createQueryBuilder('a')
-//            ->andWhere('a.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+        if (empty($transactions)) {
+            return [];
+        }
+
+        $listOfTransactions = [];
+        foreach ($transactions as $transaction) {
+            $accountDTO = $this->accountMapper->createTransferDTO(
+                [
+                    'id' => $transaction->getId(),
+                    'amount' => $transaction->getAmount(),
+                    'date' => $transaction->getDate(),
+                ]);
+            $listOfTransactions[] = $accountDTO;
+        }
+
+        return $listOfTransactions;
+    }
 }
