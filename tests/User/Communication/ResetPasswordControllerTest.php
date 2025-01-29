@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\User\Communication;
 
 use App\Entity\User;
+use App\Tests\Config;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
@@ -36,7 +37,7 @@ class ResetPasswordControllerTest extends WebTestCase
     {
         $this->client->request('GET', '/reset-password');
         $this->client->submitForm('Send password reset email', [
-            'reset_password_link_request_form[email]' => 'user1@example.com',
+            'reset_password_link_request_form[email]' => Config::USER_EMAIL_ONE,
         ]);
 
         self::assertResponseRedirects('/reset-password/check-email');
@@ -45,11 +46,11 @@ class ResetPasswordControllerTest extends WebTestCase
         self::assertSelectorExists('div.page');
     }
 
-    public function testRequestRedirectsToCheckEmailOnInvalidEmail(): void
+    public function testRequestRedirectsToCheckEmailOnUnrecognisedEmail(): void
     {
         $this->client->request('GET', '/reset-password');
         $this->client->submitForm('Send password reset email', [
-            'reset_password_link_request_form[email]' => 'invalid@email.com',
+            'reset_password_link_request_form[email]' => 'unrecognised@email.com',
         ]);
 
         self::assertResponseRedirects('/reset-password/check-email');

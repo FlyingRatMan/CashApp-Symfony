@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\User\Communication;
 
+use App\Tests\Config;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
@@ -31,7 +32,7 @@ class RegisterControllerTest extends WebTestCase
         $this->client->submitForm('register_form[registerBtn]', [
             'register_form[name]' => 'Test User',
             'register_form[email]' => 'register@success.com',
-            'register_form[password]' => 'Securepassword1!',
+            'register_form[password]' => Config::USER_PASSWORD,
         ]);
 
         self::assertResponseRedirects('/login');
@@ -42,9 +43,9 @@ class RegisterControllerTest extends WebTestCase
     public function testRegisterWithDuplicatedEmail(): void
     {
         $this->client->submitForm('register_form[registerBtn]', [
-            'register_form[name]' => 'Existing User',
-            'register_form[email]' => 'user1@example.com',
-            'register_form[password]' => 'Securepassword1!',
+            'register_form[name]' => Config::USER_NAME_ONE,
+            'register_form[email]' => Config::USER_EMAIL_ONE,
+            'register_form[password]' => Config::USER_PASSWORD,
         ]);
 
         self::assertResponseIsUnprocessable();
@@ -57,7 +58,7 @@ class RegisterControllerTest extends WebTestCase
         $this->client->submitForm('register_form[registerBtn]', [
             'register_form[name]' => 'Test User',
             'register_form[email]' => 'invalid@password.com',
-            'register_form[password]' => '123',
+            'register_form[password]' => Config::USER_PASSWORD_INVALID,
         ]);
 
         self::assertResponseIsUnprocessable();

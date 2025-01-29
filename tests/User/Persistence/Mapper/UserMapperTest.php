@@ -30,7 +30,7 @@ class UserMapperTest extends TestCase
 
     public function testEntityToDTOReturnsUserDTO(): void
     {
-        $userMapper = new UserMapper();
+        $mapper = new UserMapper();
         $userEntity = $this->createMock(User::class);
 
         $userEntity->method('getId')->willReturn(1);
@@ -38,17 +38,17 @@ class UserMapperTest extends TestCase
         $userEntity->method('getEmail')->willReturn('john.doe@example.com');
         $userEntity->method('getPassword')->willReturn('hashed_password');
 
-        $userDTO = $userMapper->entityToDTO($userEntity);
+        $userDTO = $mapper->entityToDTO($userEntity);
 
         $this->assertInstanceOf(UserDTO::class, $userDTO);
-        $this->assertEquals('John Doe', $userDTO->name);
-        $this->assertEquals('john.doe@example.com', $userDTO->email);
-        $this->assertEquals('hashed_password', $userDTO->password);
+        $this->assertSame('John Doe', $userDTO->name);
+        $this->assertSame('john.doe@example.com', $userDTO->email);
+        $this->assertSame('hashed_password', $userDTO->password);
     }
 
     public function testCreateUserDTOWithMissingData(): void
     {
-        $userMapper = new UserMapper();
+        $mapper = new UserMapper();
         $data = [
             'id' => 1,
             'name' => 'John Doe',
@@ -56,12 +56,12 @@ class UserMapperTest extends TestCase
 
         $this->expectException(\InvalidArgumentException::class);
 
-        $userMapper->createUserDTO($data);
+        $mapper->createUserDTO($data);
     }
 
     public function testEntityToDTOWithInvalidUser(): void
     {
-        $userMapper = new UserMapper();
+        $mapper = new UserMapper();
         $userEntity = $this->createMock(User::class);
 
         $userEntity->method('getId')->willReturn(0);
@@ -71,6 +71,6 @@ class UserMapperTest extends TestCase
 
         $this->expectException(\InvalidArgumentException::class);
 
-        $userMapper->entityToDTO($userEntity);
+        $mapper->entityToDTO($userEntity);
     }
 }

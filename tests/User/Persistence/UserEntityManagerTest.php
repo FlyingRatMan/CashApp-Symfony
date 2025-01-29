@@ -29,7 +29,7 @@ class UserEntityManagerTest extends KernelTestCase
         $this->entityManager = null;
     }
 
-    public function testSaveSuccessful(): void
+    public function testSaveNewUserSuccessful(): void
     {
         $userDTO = new UserDTO(
             id: 1,

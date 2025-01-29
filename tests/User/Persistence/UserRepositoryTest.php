@@ -6,6 +6,7 @@ namespace App\Tests\User\Persistence;
 
 use App\Components\User\Persistence\UserRepository;
 use App\Entity\User;
+use App\Tests\Config;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
@@ -30,7 +31,7 @@ class UserRepositoryTest extends KernelTestCase
 
     public function testGetUserByEmailReturnsUser(): void
     {
-        $userEmail = 'user1@example.com';
+        $userEmail = Config::USER_EMAIL_ONE;
 
         $userDTO = $this->userRepository->getUserByEmail($userEmail);
 
@@ -40,7 +41,7 @@ class UserRepositoryTest extends KernelTestCase
 
     public function testUpgradePasswordSuccess(): void
     {
-        $userEmail = 'user2@example.com';
+        $userEmail = Config::USER_EMAIL_TWO;
         $newPassword = 'newPass123!';
 
         $userEntity = $this->entityManager->getRepository(User::class)->findOneBy(['email' => $userEmail]);
@@ -55,7 +56,7 @@ class UserRepositoryTest extends KernelTestCase
 
     public function testGetUserByEmailReturnsNull(): void
     {
-        $nonExistentEmail = 'nonexistent@example.com';
+        $nonExistentEmail = Config::USER_EMAIL_DOES_NOT_EXIST;
 
         $userDTO = $this->userRepository->getUserByEmail($nonExistentEmail);
 

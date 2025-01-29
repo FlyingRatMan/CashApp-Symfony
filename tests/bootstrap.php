@@ -18,31 +18,29 @@ $kernel->boot();
 $application = new Application($kernel);
 $application->setAutoExit(false);
 
-$input = new ArrayInput([
+$application->run(new ArrayInput([
+    'command' => 'doctrine:database:drop',
+    '--force' => true,
+    '--env' => 'test',
+    '--quiet' => true,
+]));
+
+$application->run(new ArrayInput([
+    'command' => 'doctrine:database:create',
+    '--env' => 'test',
+    '--quiet' => true,
+]));
+
+$application->run(new ArrayInput([
+    'command' => 'doctrine:schema:update',
+    '--force' => true,
+    '--env' => 'test',
+    '--quiet' => true,
+]));
+
+$application->run(new ArrayInput([
     'command' => 'doctrine:fixtures:load',
     '--env' => 'test',
     '--no-interaction' => true,
     '--quiet' => true,
-]);
-
-// $application->run(new ArrayInput([
-//    'command' => 'doctrine:database:drop',
-//    '--force' => true,
-//    '--env' => 'test',
-//    '--quiet' => true,
-// ]));
-//
-// $application->run(new ArrayInput([
-//    'command' => 'doctrine:database:create',
-//    '--env' => 'test',
-//    '--quiet' => true,
-// ]));
-//
-// $application->run(new ArrayInput([
-//    'command' => 'doctrine:schema:update',
-//    '--force' => true,
-//    '--env' => 'test',
-//    '--quiet' => true,
-// ]));
-
-$application->run($input);
+]));

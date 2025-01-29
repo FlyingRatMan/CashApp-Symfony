@@ -2,6 +2,7 @@
 
 namespace App\Tests\User\Communication;
 
+use App\Tests\Config;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
@@ -18,8 +19,8 @@ class LoginControllerTest extends WebTestCase
     public function testLoginSuccessful(): void
     {
         $this->client->submitForm('Log in', [
-            '_username' => 'user1@example.com',
-            '_password' => 'password1',
+            '_username' => Config::USER_EMAIL_ONE,
+            '_password' => Config::USER_PASSWORD,
         ]);
 
         self::assertResponseRedirects('/account');
@@ -34,8 +35,8 @@ class LoginControllerTest extends WebTestCase
         self::assertResponseIsSuccessful();
 
         $this->client->submitForm('Log in', [
-            '_username' => 'doesNotExist@example.com',
-            '_password' => 'password',
+            '_username' => Config::USER_EMAIL_DOES_NOT_EXIST,
+            '_password' => Config::USER_PASSWORD_INVALID,
         ]);
 
         self::assertResponseRedirects('/login');
@@ -49,8 +50,8 @@ class LoginControllerTest extends WebTestCase
         self::assertResponseIsSuccessful();
 
         $this->client->submitForm('Log in', [
-            '_username' => 'user1@example.com',
-            '_password' => 'bad-password',
+            '_username' => Config::USER_NAME_ONE,
+            '_password' => Config::USER_PASSWORD_INVALID,
         ]);
 
         self::assertResponseRedirects('/login');
