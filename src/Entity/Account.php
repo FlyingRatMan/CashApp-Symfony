@@ -21,7 +21,7 @@ class Account
 
     #[ORM\ManyToOne(inversedBy: 'transactions')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?User $user = null;
+    private ?User $userId = null;
 
     public function getId(): ?int
     {
@@ -52,14 +52,14 @@ class Account
         return $this;
     }
 
-    public function getUser(): ?User
+    public function getUserId(): ?User
     {
-        return $this->user;
+        return $this->userId;
     }
 
-    public function setUser(?User $user): static
+    public function setUserId(?User $userId): static
     {
-        $this->user = $user;
+        $this->userId = $userId;
 
         return $this;
     }

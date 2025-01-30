@@ -2,6 +2,8 @@
 
 namespace App\Components\Account\Communication\Form;
 
+use App\Validator\Account\DailyLimit;
+use App\Validator\Account\HourlyLimit;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type as FormType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -18,12 +20,14 @@ class AccountForm extends AbstractType
                 'currency' => false,
                 'attr' => [
                     'required' => true,
-                    'class' => 'border border-gray-300 rounded-lg px-4 py-2 text-green-800 font-normal focus:outline-none focus:ring-2 focus:ring-green-400',
+                    'class' => 'form_input',
                 ],
                 'constraints' => [
                     new Assert\NotBlank(),
-                    // new DailyLimit(),
-                    // new HourlyLimit(),
+                    new Assert\Positive(),
+                    new Assert\Type('numeric'),
+                    new DailyLimit(),
+                    new HourlyLimit(),
                 ],
             ])
         ;

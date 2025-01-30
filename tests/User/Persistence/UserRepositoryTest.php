@@ -33,10 +33,10 @@ class UserRepositoryTest extends KernelTestCase
     {
         $userEmail = Config::USER_EMAIL_ONE;
 
-        $userDTO = $this->userRepository->getUserByEmail($userEmail);
+        $user = $this->userRepository->getUserByEmail($userEmail);
 
-        $this->assertNotNull($userDTO);
-        $this->assertEquals($userEmail, $userDTO->email);
+        $this->assertInstanceOf(User::class, $user);
+        $this->assertEquals($userEmail, $user->getEmail());
     }
 
     public function testUpgradePasswordSuccess(): void
@@ -58,8 +58,8 @@ class UserRepositoryTest extends KernelTestCase
     {
         $nonExistentEmail = Config::USER_EMAIL_DOES_NOT_EXIST;
 
-        $userDTO = $this->userRepository->getUserByEmail($nonExistentEmail);
+        $user = $this->userRepository->getUserByEmail($nonExistentEmail);
 
-        $this->assertNull($userDTO);
+        $this->assertNull($user);
     }
 }

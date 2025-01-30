@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Validator;
+namespace App\Validator\User;
 
 use App\Components\User\Persistence\UserRepository;
 use Symfony\Component\Validator\Constraint;

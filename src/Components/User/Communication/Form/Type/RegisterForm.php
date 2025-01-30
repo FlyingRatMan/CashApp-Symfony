@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Components\User\Communication\Form\Type;
 
-use App\Validator\EmailIsUnique;
+use App\Validator\User\EmailIsUnique;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type as FormType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -19,6 +19,7 @@ class RegisterForm extends AbstractType
             ->add('name', FormType\TextType::class, [
                 'label' => 'Name',
                 'attr' => [
+                    'required' => true,
                     'class' => 'form_input',
                 ],
                 'constraints' => [
@@ -28,6 +29,7 @@ class RegisterForm extends AbstractType
             ->add('email', FormType\EmailType::class, [
                 'label' => 'Email',
                 'attr' => [
+                    'required' => true,
                     'class' => 'form_input',
                 ],
                 'constraints' => [
@@ -39,6 +41,7 @@ class RegisterForm extends AbstractType
             ->add('password', FormType\PasswordType::class, [
                 'label' => 'Password',
                 'attr' => [
+                    'required' => true,
                     'class' => 'form_input',
                 ],
                 'constraints' => [

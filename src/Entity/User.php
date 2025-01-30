@@ -92,7 +92,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if (!$this->transactions->contains($transaction)) {
             $this->transactions->add($transaction);
-            $transaction->setUser($this);
+            $transaction->setUserId($this);
         }
 
         return $this;
@@ -101,8 +101,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function removeTransaction(Account $transaction): static
     {
         if ($this->transactions->removeElement($transaction)) {
-            if ($transaction->getUser() === $this) {
-                $transaction->setUser(null);
+            if ($transaction->getUserId() === $this) {
+                $transaction->setUserId(null);
             }
         }
 

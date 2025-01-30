@@ -4,22 +4,18 @@ declare(strict_types=1);
 
 namespace App\Tests\User\Communication;
 
-use App\Entity\User;
 use App\Tests\Config;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
-use SymfonyCasts\Bundle\ResetPassword\ResetPasswordHelperInterface;
 
 class ResetPasswordControllerTest extends WebTestCase
 {
     private KernelBrowser $client;
-    private ResetPasswordHelperInterface $resetPasswordHelper;
 
     protected function setUp(): void
     {
         $this->client = static::createClient();
-        $this->resetPasswordHelper = $this->client->getContainer()->get(ResetPasswordHelperInterface::class);
     }
 
     public function testRenderForm(): void
@@ -74,36 +70,4 @@ class ResetPasswordControllerTest extends WebTestCase
         self::assertResponseStatusCodeSame(Response::HTTP_NOT_FOUND);
         self::assertSelectorNotExists('form');
     }
-
-    /*public function testReset(): void
-    {
-        $user = new User();
-        $user->setName('Name');
-        $user->setEmail('email@gmail.com');
-        $user->setPassword('password');
-
-        $entityManager = self::getContainer()->get('doctrine')->getManager();
-        $entityManager->persist($user);
-        $entityManager->flush();
-
-        $resetToken = $this->resetPasswordHelper->generateResetToken($user)->getToken();
-
-        $this->client->request('GET', '/reset-password/reset/'.$resetToken);
-
-        $session = $this->client->getRequest()->getSession();
-        $session->start();
-        $session->set('ResetPasswordPublicToken', $resetToken);
-
-        $this->client->request('GET', '/reset-password/reset/'.$resetToken);
-        self::assertResponseRedirects();
-        self::assertResponseIsSuccessful();
-
-        self::assertSelectorExists('form[name="change_password"]');
-
-        $this->client->submitForm('Reset password', [
-            'change_password[plainPassword][first]' => 'newpassword',
-            'change_password[plainPassword][second]' => 'newpassword',
-        ]);
-        self::assertResponseRedirects('/login');
-    }*/
 }

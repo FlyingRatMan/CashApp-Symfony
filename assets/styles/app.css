@@ -23,6 +23,6 @@
     }
 
     .centered {
-        @apply h-dvh flex items-center justify-center text-xl;
+        @apply h-max m-8 flex items-center justify-center text-xl;
     }
 }

@@ -6,6 +6,7 @@ namespace App\Tests\Account\Persistence;
 
 use App\Components\Account\Persistence\AccountRepository;
 use App\DataTransferObjects\TransferDTO;
+use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
@@ -30,7 +31,8 @@ class AccountRepositoryTest extends KernelTestCase
 
     public function testGetAllByUserIDReturnsListOfTransactions(): void
     {
-        $actualData = $this->accountRepository->getAllByUserID(2);
+        $user = $this->entityManager->getRepository(User::class)->find(2);
+        $actualData = $this->accountRepository->getAllByUserID($user);
 
         foreach ($actualData as $transaction) {
             $this->assertInstanceOf(TransferDTO::class, $transaction);
@@ -41,7 +43,8 @@ class AccountRepositoryTest extends KernelTestCase
 
     public function testGetAllByUserIDReturnsEmpty(): void
     {
-        $actualData = $this->accountRepository->getAllByUserID(0);
+        $user = $this->entityManager->getRepository(User::class)->find(3);
+        $actualData = $this->accountRepository->getAllByUserID($user);
 
         $this->assertEmpty($actualData);
     }

@@ -1,10 +1,12 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Tests\Account\Persistence;
 
 use App\Components\Account\Persistence\AccountEntityManager;
 use App\DataTransferObjects\TransferDTO;
+use App\Entity\Account;
 use App\Entity\User;
 use App\Tests\Config;
 use Doctrine\ORM\EntityManagerInterface;
@@ -31,17 +33,20 @@ class AccountEntityManagerTest extends KernelTestCase
 
     public function testAddSuccessful(): void
     {
-        $user = new User();
-        $user->setName(Config::USER_NAME_ONE);
-        $user->setEmail(Config::USER_EMAIL_ONE);
-        $user->setPassword(Config::USER_PASSWORD);
-        $transferDTO = new TransferDTO(
-            1,
-            10.0,
-            '2024-08-22'
-        );
+        $user = $this->entityManager->getRepository(User::class)->findOneBy([
+            'email' => Config::USER_EMAIL_ONE,
+        ]);
+        $userId = $user->getId();
+        $this->assertNotNull($userId);
+
+        $transferDTO = new TransferDTO($userId, 10.0, '2024-08-22');
 
         $this->accountEntityManager->add($user, $transferDTO);
+        $accountEntity = $this->entityManager->getRepository(Account::class)->findOneBy(['userId' => $transferDTO->id]);
 
+        $this->assertNotNull($accountEntity);
+        $this->assertSame($transferDTO->id, $accountEntity->getUserId()->getId());
+        $this->assertSame($transferDTO->amount, $accountEntity->getAmount());
+        $this->assertSame($transferDTO->date, $accountEntity->getDate());
     }
 }
