@@ -31,8 +31,7 @@ class AccountRepositoryTest extends KernelTestCase
 
     public function testGetAllByUserIDReturnsListOfTransactions(): void
     {
-        $user = $this->entityManager->getRepository(User::class)->find(2);
-        $actualData = $this->accountRepository->getAllByUserID($user);
+        $actualData = $this->accountRepository->getAllByUserID(2);
 
         foreach ($actualData as $transaction) {
             $this->assertInstanceOf(TransferDTO::class, $transaction);
@@ -43,8 +42,7 @@ class AccountRepositoryTest extends KernelTestCase
 
     public function testGetAllByUserIDReturnsEmpty(): void
     {
-        $user = $this->entityManager->getRepository(User::class)->find(3);
-        $actualData = $this->accountRepository->getAllByUserID($user);
+        $actualData = $this->accountRepository->getAllByUserID(0);
 
         $this->assertEmpty($actualData);
     }

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\User\Persistence;
 
 use App\Components\User\Persistence\UserRepository;
+use App\DataTransferObjects\UserDTO;
 use App\Entity\User;
 use App\Tests\Config;
 use Doctrine\ORM\EntityManagerInterface;
@@ -35,8 +36,8 @@ class UserRepositoryTest extends KernelTestCase
 
         $user = $this->userRepository->getUserByEmail($userEmail);
 
-        $this->assertInstanceOf(User::class, $user);
-        $this->assertEquals($userEmail, $user->getEmail());
+        $this->assertInstanceOf(UserDTO::class, $user);
+        $this->assertEquals($userEmail, $user->email);
     }
 
     public function testUpgradePasswordSuccess(): void

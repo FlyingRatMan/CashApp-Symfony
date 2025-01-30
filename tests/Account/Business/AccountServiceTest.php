@@ -23,7 +23,6 @@ class AccountServiceTest extends TestCase
 
     public function testGetBalanceReturnsCorrectBalance(): void
     {
-        $user = new User();
         $transactions = [
             new TransferDTO(5, 50.0, '2024-01-01'),
             new TransferDTO(5, 20.0, '2024-01-02'),
@@ -33,25 +32,23 @@ class AccountServiceTest extends TestCase
         $this->accountRepository
             ->expects($this->once())
             ->method('getAllByUserID')
-            ->with($user)
+            ->with(5)
             ->willReturn($transactions);
 
-        $balance = $this->accountService->getBalance($user);
+        $balance = $this->accountService->getBalance(5);
 
         $this->assertSame(100.0, $balance);
     }
 
     public function testGetBalanceReturnsZero(): void
     {
-        $user = new User();
-
         $this->accountRepository
             ->expects($this->once())
             ->method('getAllByUserID')
-            ->with($user)
+            ->with(0)
             ->willReturn([]);
 
-        $balance = $this->accountService->getBalance($user);
+        $balance = $this->accountService->getBalance(0);
 
         $this->assertSame(0.0, $balance);
     }

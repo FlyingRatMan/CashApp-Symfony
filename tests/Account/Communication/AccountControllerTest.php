@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 class AccountControllerTest extends WebTestCase
 {
     private KernelBrowser $client;
-    private $userRepository;
+    private UserRepository $userRepository;
 
     protected function setUp(): void
     {

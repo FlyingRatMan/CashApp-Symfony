@@ -4,7 +4,6 @@ namespace App\Components\Account\Persistence;
 
 use App\Components\Account\Persistence\Mapper\AccountMapper;
 use App\Entity\Account;
-use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -20,9 +19,9 @@ class AccountRepository extends ServiceEntityRepository
         parent::__construct($registry, Account::class);
     }
 
-    public function getAllByUserID(User $user): array
+    public function getAllByUserID(int $userId): array
     {
-        $transactions = $user->getTransactions();
+        $transactions = $this->findBy(['userId' => $userId]);
 
         if (empty($transactions)) {
             return [];
